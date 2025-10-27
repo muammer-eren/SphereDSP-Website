@@ -39,7 +39,67 @@ This guide covers deploying the Sphere DSP marketing website to production.
 - [ ] Test all forms
 - [ ] Verify all links work
 
-## Vercel Deployment
+## Netlify Deployment
+
+### Quick Deploy
+
+1. **Go to Netlify:** https://app.netlify.com/
+2. **Add new site** → Import an existing project
+3. **Choose GitHub** (authorize if needed)
+4. **Select repository:** `muammer-eren/SphereDSP-Website`
+5. **Configure build settings:**
+   - **Branch to deploy:** `main` (or `master`)
+   - **Build command:** `pnpm install && pnpm build`
+   - **Publish directory:** `.next`
+6. **Click "Deploy site"**
+
+Build time: ~3-5 minutes
+
+### Fix "No Branch Found" Error
+
+If Netlify shows "no branch found":
+
+**Solution 1: Manual branch input**
+- Type `main` manually in the "Branch to deploy" field
+- Don't rely on the dropdown
+
+**Solution 2: Verify repository access**
+1. Netlify → User Settings → Applications
+2. Find GitHub → Configure
+3. Ensure `SphereDSP-Website` has access
+4. Refresh and try again
+
+**Solution 3: Create master branch** (already done)
+```bash
+git checkout -b master
+git push -u origin master
+git checkout main
+```
+
+Both `main` and `master` branches are now available.
+
+### Netlify Configuration
+
+The repository includes `netlify.toml`:
+
+```toml
+[build]
+  command = "pnpm install && pnpm build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+```
+
+### Alternative: Netlify CLI
+
+```bash
+npm i -g netlify-cli
+cd /Users/muammereren/Desktop/SphereDSP
+netlify deploy --prod
+```
+
+## Vercel Deployment (Recommended for Next.js)
 
 ### Initial Setup
 
